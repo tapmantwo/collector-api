@@ -3,7 +3,7 @@ const path = require("path");
 module.exports = {
   target: "node",
   mode: "production",
-  entry: "./src/index.ts",
+  entry: "./api/index.ts",
   module: {
     rules: [
       {
@@ -18,6 +18,6 @@ module.exports = {
   },
   output: {
     filename: "index.js",
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "public"),
   },
 };
