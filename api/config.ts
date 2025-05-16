@@ -1,10 +1,14 @@
+// @ts-nocheck
 import * as dotenv from "dotenv";
 dotenv.config();
 
-export const config = {
-  openai: {
-    apiKey: process.env.OPENAI_API_KEY,
-    assistantId: process.env.ASSISTANT_ID,
-  },
-  apiKey: process.env.ANALYSER_KEY,
+export const config = () => {
+  const { OPENAI_API_KEY, ASSISTANT_ID, ANALYSER_KEY } = process.env;
+  return {
+    openai: {
+      apiKey: OPENAI_API_KEY,
+      assistantId: ASSISTANT_ID,
+    },
+    apiKey: ANALYSER_KEY,
+  };
 };

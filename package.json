@@ -1,11 +1,11 @@
 {
   "name": "collector-api",
-  "packageManager": "yarn@4.2.2",
   "private": true,
   "scripts": {
     "dev": "nodemon api/index.ts",
-    "start:prod": "node public/index.js",
-    "type-check": "tsc -p tsconfig.json --noEmit"
+    "start:prod": "node dist/index.js",
+    "type-check": "tsc -p tsconfig.json --noEmit",
+    "build": "tsc -p tsconfig.json --outDir dist/api"
   },
   "dependencies": {
     "cors": "^2.8.5",

@@ -15,8 +15,9 @@ routes.get("/", (req: any, res: any) => {
 routes.post("/analyse", upload.single("image"), async (req: any, res: any) => {
   // check whether the api key is in the headers
   const apiKey = req.headers["x-api-key"];
-  console.log("API Key:", apiKey, config.apiKey);
-  if (apiKey !== config.apiKey) {
+  const c = config();
+  console.log("API Key:", apiKey, c.apiKey);
+  if (apiKey !== c.apiKey) {
     return res.status(401).send("Unauthorized: Invalid API key.");
   }
 

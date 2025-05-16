@@ -12,15 +12,17 @@
     "inlineSourceMap": true,
     "allowJs": false,
     "strictFunctionTypes": false,
-    "strictNullChecks": true
-    // "baseUrl": "./",
-    // "paths": {
-    //   "*": ["node_modules/*"]
-    // }
+    "strictNullChecks": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "*": ["node_modules/*"]
+    }
   },
   "include": ["api/**/*.ts"],
-  "exclude": ["node_modules"],
-  "ts-node": {
-    "files": true
-  }
+  "exclude": ["node_modules"]
+  // "ts-node": {
+  //   "files": true,
+
+  // }
 }

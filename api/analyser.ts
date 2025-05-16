@@ -1,9 +1,10 @@
 import OpenAI, { toFile } from "openai";
 import { config } from "./config";
 
-const assistantId = process.env.ASSISTANT_ID!;
+const c = config();
+const assistantId = c.openai.assistantId as string;
 const client = new OpenAI({
-  apiKey: config.openai.apiKey,
+  apiKey: c.openai.apiKey,
 });
 
 export type Game = {
