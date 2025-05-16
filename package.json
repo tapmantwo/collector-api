@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "nodemon api/index.ts",
-    "start:prod": "node public/index.js"
+    "start:prod": "node public/index.js",
+    "type-check": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
     "cors": "^2.8.5",

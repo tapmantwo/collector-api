@@ -79,7 +79,7 @@ export const analyse = async (image: Buffer) => {
 
     console.log("lastAssistantMessage", lastAssistantMessage);
 
-    if (lastAssistantMessage?.content[0].type !== "text") {
+    if (lastAssistantMessage?.content[0]?.type !== "text") {
       throw new Error(`Run failed with status: ${run.status}`);
     }
 

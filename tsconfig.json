@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "incremental": true,
+    "noUncheckedIndexedAccess": true,
     "noImplicitAny": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -10,13 +12,13 @@
     "inlineSourceMap": true,
     "allowJs": false,
     "strictFunctionTypes": false,
-    "strictNullChecks": true,
-    "baseUrl": "./",
-    "paths": {
-      "*": ["node_modules/*"]
-    }
+    "strictNullChecks": true
+    // "baseUrl": "./",
+    // "paths": {
+    //   "*": ["node_modules/*"]
+    // }
   },
-  "include": ["src/**/*.ts"],
+  "include": ["api/**/*.ts"],
   "exclude": ["node_modules"],
   "ts-node": {
     "files": true
