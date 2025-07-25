@@ -36,61 +36,82 @@ export const analyse = async (image: Buffer) => {
   };
 
   const deleteImage = async (fileId: string): Promise<void> => {
-    await client.files.del(fileId);
+    await client.files.delete(fileId);
   };
 
-  const startThread = async (fileId: string): Promise<string> => {
-    const thread = await client.beta.threads.create();
+  // const startThread = async (fileId: string): Promise<string> => {
+  //   const thread = await client.beta.threads.create();
 
-    await client.beta.threads.messages.create(thread.id, {
-      role: "user",
-      content: [
+  //   await client.beta.threads.messages.create(thread.id, {
+  //     role: "user",
+  //     content: [
+  //       {
+  //         type: "image_file",
+  //         image_file: {
+  //           file_id: fileId,
+  //           detail: "auto",
+  //         },
+  //       },
+  //     ],
+  //   });
+
+  //   return thread.id;
+  // };
+
+  const runPrompt = async (fileId: string): Promise<string> => {
+    const result = await client.responses.create({
+      prompt: {
+        id: "pmpt_6883698dfad0819584b5629031e4fcc50b2a53f786284f91",
+      },
+      input: [
         {
-          type: "image_file",
-          image_file: {
-            file_id: fileId,
-            detail: "auto",
-          },
+          role: "user",
+          content: [
+            {
+              detail: "auto",
+              type: "input_image",
+              file_id: fileId,
+            },
+          ],
         },
       ],
     });
 
-    return thread.id;
+    return result.output_text;
   };
 
-  const runThread = async (threadId: string): Promise<string> => {
-    const run = await client.beta.threads.runs.createAndPoll(threadId, {
-      assistant_id: assistantId,
-      additional_instructions: null,
-    });
+  // const runThread = async (threadId: string): Promise<string> => {
+  //   const run = await client.beta.threads.runs.createAndPoll(threadId, {
+  //     assistant_id: assistantId,
+  //     additional_instructions: null,
+  //   });
 
-    if (run.status !== "completed") {
-      throw new Error(`Run failed with status: ${run.status}`);
-    }
+  //   if (run.status !== "completed") {
+  //     throw new Error(`Run failed with status: ${run.status}`);
+  //   }
 
-    const messages = await client.beta.threads.messages.list(threadId);
+  //   const messages = await client.beta.threads.messages.list(threadId);
 
-    // for (const message of messages.getPaginatedItems()) {
-    //   console.log(message);
-    // }
-    const lastAssistantMessage = messages
-      .getPaginatedItems()
-      .filter((m) => m.role === "assistant")
-      .pop();
+  //   // for (const message of messages.getPaginatedItems()) {
+  //   //   console.log(message);
+  //   // }
+  //   const lastAssistantMessage = messages
+  //     .getPaginatedItems()
+  //     .filter((m) => m.role === "assistant")
+  //     .pop();
 
-    console.log("lastAssistantMessage", lastAssistantMessage);
+  //   console.log("lastAssistantMessage", lastAssistantMessage);
 
-    if (lastAssistantMessage?.content[0]?.type !== "text") {
-      throw new Error(`Run failed with status: ${run.status}`);
-    }
+  //   if (lastAssistantMessage?.content[0]?.type !== "text") {
+  //     throw new Error(`Run failed with status: ${run.status}`);
+  //   }
 
-    return lastAssistantMessage.content[0].text.value;
-  };
+  //   return lastAssistantMessage.content[0].text.value;
+  // };
 
   const fileId = await uploadImage();
   try {
-    const threadId = await startThread(fileId);
-    const result = await runThread(threadId);
+    const result = await runPrompt(fileId);
 
     console.log("result", result);
     const parsed = JSON.parse(result);
